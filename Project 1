@@ -1,0 +1,119 @@
+import java.util.ArrayList;
+import java.util.Scanner;
+
+class Task {
+    String name;
+    String description;
+    String startDate;
+    String endDate;
+    String status;
+
+    Task(String name, String description, String startDate, String endDate) {
+        this.name = name;
+        this.description = description;
+        this.startDate = startDate;
+        this.endDate = endDate;
+        this.status = "Not Started";
+    }
+
+    void markAsCompleted() {
+        this.status = "Completed";
+    }
+}
+
+class Project {
+    String name;
+    String description;
+    String startDate;
+    String endDate;
+    ArrayList<Task> tasks;
+
+    Project(String name, String description, String startDate, String endDate) {
+        this.name = name;
+        this.description = description;
+        this.startDate = startDate;
+        this.endDate = endDate;
+        this.tasks = new ArrayList<>();
+    }
+
+    void addTask(Task task) {
+        tasks.add(task);
+    }
+
+    void displayDetails() {
+        System.out.println("Project: " + name);
+        System.out.println("Description: " + description);
+        System.out.println("Start Date: " + startDate);
+        System.out.println("End Date: " + endDate);
+        System.out.println("Tasks:");
+
+        for (Task task : tasks) {
+            System.out.println("- " + task.name + " (" + task.status + ")");
+        }
+    }
+}
+
+class ProjectManager {
+    ArrayList<Project> projects;
+
+    ProjectManager() {
+        this.projects = new ArrayList<>();
+    }
+
+    void addProject(Project project) {
+        projects.add(project);
+    }
+
+    void displayProjects() {
+        System.out.println("Projects:");
+
+        for (Project project : projects) {
+            System.out.println("- " + project.name);
+        }
+    }
+
+    public static void main(String[] args) {
+        ProjectManager projectManager = new ProjectManager();
+        Scanner scanner = new Scanner(System.in);
+
+        while (true) {
+            System.out.println("1. Add Project");
+            System.out.println("2. Display Projects");
+            System.out.println("3. Exit");
+            System.out.print("Choose an option: ");
+
+            int choice = scanner.nextInt();
+            scanner.nextLine(); // consume the newline character
+
+            switch (choice) {
+                case 1:
+                    System.out.print("Enter project name: ");
+                    String projectName = scanner.nextLine();
+                    System.out.print("Enter project description: ");
+                    String projectDescription = scanner.nextLine();
+                    System.out.print("Enter project start date: ");
+                    String projectStartDate = scanner.nextLine();
+                    System.out.print("Enter project end date: ");
+                    String projectEndDate = scanner.nextLine();
+
+                    Project project = new Project(projectName, projectDescription, projectStartDate, projectEndDate);
+                    projectManager.addProject(project);
+
+                    System.out.println("Project added successfully!\n");
+                    break;
+
+                case 2:
+                    projectManager.displayProjects();
+                    System.out.println();
+                    break;
+
+                case 3:
+                    System.out.println("Exiting the program. Goodbye!");
+                    System.exit(0);
+
+                default:
+                    System.out.println("Invalid option. Please try again.\n");
+            }
+        }
+    }
+}
